@@ -6,4 +6,5 @@ import com.spring_springboot.task_management.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
+	
 }

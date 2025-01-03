@@ -1,6 +1,7 @@
 package com.spring_springboot.task_management.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,11 @@ public class TaskService {
 	}
 	public List<Task> getAllTasks(){
 		return repository.findAll();
+	}
+	
+	public Optional<Task> getTaskById(Long taskId) {
+		// TODO Auto-generated method stub
+		return repository.findById(taskId);
 	}
 	
 	public Task createTask(Task task){
@@ -37,4 +43,5 @@ public class TaskService {
 	public void deletetask(Long id) {
 		repository.deleteById(id);
 	}
+	
 }

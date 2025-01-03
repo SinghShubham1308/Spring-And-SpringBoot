@@ -1,8 +1,10 @@
 package com.spring_springboot.task_management.controller;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,9 +35,16 @@ public class TaskController {
 		return taskService.getAllTasks();
 	}
 	
+	@GetMapping("/{taskId}")
+	public Optional<Task> getTaskById(@PathVariable Long taskId) {
+	    return taskService.getTaskById(taskId);
+	}
+
+	
 	@PostMapping
-	public Task createTask(@RequestBody Task task) {
-		return taskService.createTask(task);
+	public ResponseEntity<Task> createTask(@RequestBody Task task) {
+		Task savedTask = taskService.createTask(task);
+		return ResponseEntity.status(HttpStatus.CREATED).body(savedTask);
 	}
 	
 	@PutMapping("/{id}")
