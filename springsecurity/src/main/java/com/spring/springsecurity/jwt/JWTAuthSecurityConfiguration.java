@@ -1,4 +1,4 @@
-package com.spring.springsecurity.basic;
+package com.spring.springsecurity.jwt;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -13,7 +13,6 @@ import javax.sql.DataSource;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -26,7 +25,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -36,7 +37,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
-@Configuration
+//@Configuration
 public class JWTAuthSecurityConfiguration {
 
 	@Bean
@@ -55,12 +56,6 @@ public class JWTAuthSecurityConfiguration {
 		return http.build();
 	}
 
-	@Bean
-	DataSource dataSource() {
-		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
-				.addScripts(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION).build();
-	}
-
 //	@Bean
 //	public UserDetailsService inMemomryUser() {
 //		UserDetails userDetails = User.withUsername("SinghShubham").password("{noop}springSecurity").roles().build();
@@ -68,6 +63,14 @@ public class JWTAuthSecurityConfiguration {
 //		return new InMemoryUserDetailsManager(userDetails, adminDetails);
 //
 //	}
+	
+	@Bean
+	DataSource dataSource() {
+		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2)
+				.addScripts(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION).build();
+	}
+
+
 
 	@Bean
 	public UserDetailsService embeddedUser(DataSource datasource) {
@@ -134,6 +137,12 @@ public class JWTAuthSecurityConfiguration {
 	@Bean
 	public JwtDecoder jwtDecoder(RSAKey getRsaKey) throws JOSEException {
 		return NimbusJwtDecoder.withPublicKey(getRsaKey.toRSAPublicKey()).build();
+	}
+	
+	@Bean
+	public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
+		
+		return new NimbusJwtEncoder(jwkSource);
 	}
 
 }
