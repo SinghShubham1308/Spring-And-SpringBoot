@@ -14,11 +14,11 @@ public class TodoService {
 	private static int todosCount = 0;
 	
 	static {
-		todos.add(new Todo(++todosCount, "in28minutes","Get AWS Certified", 
+		todos.add(new Todo(++todosCount, "SinghShubham","Get AWS Certified", 
 							LocalDate.now().plusYears(10), false ));
-		todos.add(new Todo(++todosCount, "in28minutes","Learn DevOps", 
+		todos.add(new Todo(++todosCount, "SinghShubham","Learn DevOps", 
 				LocalDate.now().plusYears(11), false ));
-		todos.add(new Todo(++todosCount, "in28minutes","Learn Full Stack Development", 
+		todos.add(new Todo(++todosCount, "SinghShubham","Learn Full Stack Development", 
 				LocalDate.now().plusYears(12), false ));
 	}
 	
@@ -45,8 +45,16 @@ public class TodoService {
 		return todo;
 	}
 
-	public void updateTodo(Todo todo) {
-		deleteById(todo.getId());
-		todos.add(todo);
+	public Todo updateTodo(int id, Todo updatedTodo) {
+	    for (Todo todo : todos) {
+	        if (todo.getId() == id) {
+	            todo.setDescription(updatedTodo.getDescription());
+	            todo.setDone(updatedTodo.isDone());
+	            todo.setTargetDate(updatedTodo.getTargetDate());
+	            return todo; // Successfully updated
+	        }
+	    }
+	    return null; // If no todo with given ID is found
 	}
+
 }
