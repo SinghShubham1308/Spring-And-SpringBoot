@@ -1,4 +1,4 @@
-package com.in28minutes.rest.webservices.restfulwebservices.controller;
+package com.todoapp.rest.webservices.restfulwebservices.controller;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.in28minutes.rest.webservices.restfulwebservices.entity.Todo;
-import com.in28minutes.rest.webservices.restfulwebservices.todo.TodoService;
+import com.todoapp.rest.webservices.restfulwebservices.entity.Todo;
+import com.todoapp.rest.webservices.restfulwebservices.todo.TodoService;
 
 @RestController
 public class TodoResourceController {

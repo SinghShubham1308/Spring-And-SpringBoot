@@ -1,4 +1,4 @@
-package com.in28minutes.rest.webservices.restfulwebservices.todo;
+package com.todoapp.rest.webservices.restfulwebservices.todo;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.in28minutes.rest.webservices.restfulwebservices.entity.Todo;
-import com.in28minutes.rest.webservices.restfulwebservices.repository.TodosRepository;
+import com.todoapp.rest.webservices.restfulwebservices.entity.Todo;
+import com.todoapp.rest.webservices.restfulwebservices.repository.TodosRepository;
 
 @Service
 public class TodoService {

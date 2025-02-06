@@ -1,4 +1,4 @@
-package com.in28minutes.rest.webservices.restfulwebservices.security;
+package com.todoapp.rest.webservices.restfulwebservices.security;
 
 import javax.sql.DataSource;
 

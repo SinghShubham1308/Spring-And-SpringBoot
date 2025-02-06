@@ -1,9 +1,9 @@
-package com.in28minutes.rest.webservices.restfulwebservices.entity;
+package com.todoapp.rest.webservices.restfulwebservices.entity;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import com.in28minutes.rest.webservices.restfulwebservices.util.TodoIdGenerator;
+import com.todoapp.rest.webservices.restfulwebservices.util.TodoIdGenerator;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

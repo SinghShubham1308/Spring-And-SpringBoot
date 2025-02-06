@@ -1,4 +1,4 @@
-package com.in28minutes.rest.webservices.restfulwebservices.util;
+package com.todoapp.rest.webservices.restfulwebservices.util;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
