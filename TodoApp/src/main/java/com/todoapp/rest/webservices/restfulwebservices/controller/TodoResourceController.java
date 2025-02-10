@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,15 @@ public class TodoResourceController {
 	TodoResourceController(TodoService todoService) {
 		this.todoService = todoService;
 	}
+
+//	@GetMapping("/authentication")
+//	public ResponseEntity<String> getAuthToken(Authentication authentication) {
+//		if (authentication != null) {
+//			return ResponseEntity.ok("success"); // Valid credentials
+//		} else {
+//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+//		}
+//	}
 
 	@GetMapping("/user/{username}/todos")
 	public List<Todo> retreiveTodos(@PathVariable String username) {
