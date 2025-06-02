@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,16 +13,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todoapp.rest.webservices.restfulwebservices.entity.Todo;
-import com.todoapp.rest.webservices.restfulwebservices.todo.TodoService;
+import com.todoapp.rest.webservices.restfulwebservices.services.TodoService;
 
 @RestController
 public class TodoResourceController {
 
-//	@Autowired
-	TodoService todoService;
+	private TodoService todoService;
 
 	TodoResourceController(TodoService todoService) {
 		this.todoService = todoService;
+
 	}
 
 //	@GetMapping("/authentication")
@@ -60,10 +59,7 @@ public class TodoResourceController {
 
 	@PostMapping("/user/{username}/todos")
 	public ResponseEntity<Todo> addTodo(@PathVariable String username, @RequestBody Todo todo) {
-		// Add todo using service
 		Todo newTodo = todoService.addTodo(username, todo.getDescription(), todo.getTargetDate(), todo.isDone());
-
-		// Return the created todo with 201 Created status
 		return ResponseEntity.status(HttpStatus.CREATED).body(newTodo);
 	}
 

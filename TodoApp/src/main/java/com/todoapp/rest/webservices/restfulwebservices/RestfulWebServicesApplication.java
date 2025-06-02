@@ -16,10 +16,15 @@ public class RestfulWebServicesApplication {
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
+			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedMethods("*").allowedOrigins("http://localhost:5173/");
-
+				registry.addMapping("/**")
+						.allowedMethods("*")
+						.allowedOrigins("http://localhost:5173")
+						.allowedHeaders("*")
+						.allowCredentials(true);
 			}
 		};
 	}
+
 }
