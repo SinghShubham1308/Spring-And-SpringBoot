@@ -1,0 +1,3 @@
+/.metadata/
+# SonarLint cache and lock files
+.sonarlint/
