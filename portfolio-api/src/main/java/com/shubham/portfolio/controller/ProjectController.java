@@ -3,9 +3,11 @@ package com.shubham.portfolio.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shubham.portfolio.model.ContactRequest;
 import com.shubham.portfolio.model.Project;
+import com.shubham.portfolio.service.EmailService;
 import com.shubham.portfolio.service.ProjectService;
 
 /**
@@ -22,14 +25,15 @@ import com.shubham.portfolio.service.ProjectService;
  */
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin(origins = "*")
 public class ProjectController {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProjectController.class);
 	private ProjectService service;
+	private EmailService emailService;
 
-	public ProjectController(ProjectService service) {
+	public ProjectController(ProjectService service, EmailService emailService) {
 		super();
 		this.service = service;
+		this.emailService = emailService;
 	}
 
 	@GetMapping("/projects")
@@ -57,15 +61,31 @@ public class ProjectController {
 
 	@PostMapping("/contact")
 	public ResponseEntity<Void> handleContactRequest(@RequestBody ContactRequest contactRequest) {
-		System.out.println("===================================");
-		System.out.println("CONTACT REQUEST RECEIVED:");
-		System.out.println("Name: " + contactRequest.getName());
-		System.out.println("Email: " + contactRequest.getEmail());
-		System.out.println("Message: " + contactRequest.getMessage());
-		System.out.println("===================================");
+		LOGGER.info("CONTACT REQUEST RECEIVED: {}", contactRequest.getName());
 
-		// Return 200 OK
-		return ResponseEntity.ok().build();
+		// Email service ko call karein
+		try {
+			emailService.sendContactEmail(contactRequest);
+			// Email safalta se bhej diya gaya
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			// Agar email bhejne mein koi error aaye
+			LOGGER.error("Failed to send email", e);
+			return ResponseEntity.internalServerError().build();
+		}
 	}
+	
+	@DeleteMapping("/projects/{id}")
+    public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
+        // Hum service ko call karke project ko delete karenge
+        try {
+            service.deleteProject(id); // Yeh method hum service file mein banayenge
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } catch (Exception e) {
+            LOGGER.error("Error deleting project with id: {}", id, e);
+            // Agar project nahi milta hai toh NOT_FOUND bhej sakte hain
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
 }
