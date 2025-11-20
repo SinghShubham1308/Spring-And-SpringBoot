@@ -1,5 +1,6 @@
 package com.shubham.portfolio;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +14,9 @@ import com.shubham.portfolio.repository.UserRepository;
 
 @SpringBootApplication
 public class PortfolioApiApplication {
+	@Value("${jwt.secret.key}")
+//	@Value("${admin.email}")
+	private String jwtkeyString;
 
 	public static void main(String[] args) {
 
@@ -68,6 +72,7 @@ public class PortfolioApiApplication {
 						.password(passwordEncoder.encode("P@ssw0rd@1234")).role(Role.ADMIN).build();
 				userRepository.save(adminUser);
 				System.out.println("Admin user created: upstreamdevotion / P@ssw0rd@1234");
+				System.out.println("printing jwtkey " + jwtkeyString);
 			}
 		};
 	}

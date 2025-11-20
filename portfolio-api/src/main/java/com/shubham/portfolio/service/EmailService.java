@@ -34,9 +34,6 @@ public class EmailService {
 	public void sendContactEmail(ContactRequest contactRequest) {
 		try {
 			SimpleMailMessage messageToAdmin = new SimpleMailMessage();
-
-			// --- YEH HAIN UPDATES ---
-
 			// 1. FROM: Hamesha validated email hona chahiye
 			messageToAdmin.setFrom(validatedBrevoSender);
 
