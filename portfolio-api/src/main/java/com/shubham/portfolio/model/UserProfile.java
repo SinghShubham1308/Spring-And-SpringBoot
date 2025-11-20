@@ -1,5 +1,6 @@
 package com.shubham.portfolio.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -62,8 +63,8 @@ public class UserProfile {
 	private User user;
 
 	@OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<AboutFeature> features;
+	private Set<AboutFeature> features = new HashSet<>();
 
 	@OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Skill> skills;
+	private Set<Skill> skills = new HashSet<>();
 }
