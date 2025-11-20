@@ -1,10 +1,13 @@
 package com.shubham.portfolio.service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +22,6 @@ import com.shubham.portfolio.model.AboutFeature;
 import com.shubham.portfolio.model.Skill;
 import com.shubham.portfolio.model.User;
 import com.shubham.portfolio.model.UserProfile;
-import com.shubham.portfolio.repository.AboutFeatureRepository;
-import com.shubham.portfolio.repository.SkillRepository;
 import com.shubham.portfolio.repository.UserProfileRepository;
 import com.shubham.portfolio.repository.UserRepository;
 
@@ -30,25 +31,22 @@ import com.shubham.portfolio.repository.UserRepository;
 
 @Service
 public class UserProfileService {
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserProfileService.class);
 	private final UserProfileRepository userProfileRepository;
 	private final UserRepository userRepository;
-	private final SkillRepository skillRepository;
-	private final AboutFeatureRepository aboutFeatureRepository;
 
-	public UserProfileService(UserProfileRepository userProfileRepository, UserRepository userRepository,
-			SkillRepository skillRepository, AboutFeatureRepository aboutFeatureRepository) {
+	public UserProfileService(UserProfileRepository userProfileRepository, UserRepository userRepository) {
 		super();
 		this.userProfileRepository = userProfileRepository;
 		this.userRepository = userRepository;
-		this.skillRepository = skillRepository;
-		this.aboutFeatureRepository = aboutFeatureRepository;
 	}
 
 	@Transactional(readOnly = true)
 	public PortfolioDataDto getPortfolioData() {
-
+		LOGGER.info("[UserProfileService][getPortfolioData] Inside the getPortfolioData");
 		UserProfile profile = userProfileRepository.findDefaultProfileWithDetails().orElse(null);
 		if (profile == null) {
+			LOGGER.warn("[UserProfileService][getPortfolioData] Profile is null");
 			return null;
 		}
 
@@ -57,14 +55,26 @@ public class UserProfileService {
 
 	@Transactional
 	public PortfolioDataDto insertUpdatePortfolioData(PortfolioDataDto dataDto) {
+		LOGGER.info("[UserProfileService][insertUpdatePortfolioData] Inside the insertUpdatePortfolioData {}", dataDto);
 		User adminUser = userRepository.findByUsername("upstreamdevotion")
 				.orElseThrow(() -> new ResourceNotFoundException("Admin user not found. Seeder nahi chala."));
+		LOGGER.debug("[UserProfileService][insertUpdatePortfolioData] admin user name is {}", adminUser);
 		UserProfile profile = userProfileRepository.findByUsernameWithDetails(adminUser.getUsername())
 				.orElse(new UserProfile());
+		LOGGER.debug("[UserProfileService][insertUpdatePortfolioData]  user profile is {}", profile);
 		profile.setUser(adminUser);
-		profile.getFeatures().clear();
-		profile.getSkills().clear();
+		if (profile.getFeatures() == null) {
+			profile.setFeatures(new HashSet<>());
+		} else {
+			profile.getFeatures().clear();
+		}
 
+		if (profile.getSkills() == null) {
+			profile.setSkills(new HashSet<>());
+		} else {
+			profile.getSkills().clear();
+		}
+		LOGGER.debug("[UserProfileService][insertUpdatePortfolioData] setting PersonalDto from portfolioDataDto ");
 		PersonalDto personal = dataDto.getPersonal();
 		profile.setName(personal.getName());
 		profile.setTitle(personal.getTitle());
@@ -78,6 +88,7 @@ public class UserProfileService {
 		profile.setProfileImage(personal.getProfileImage());
 		profile.setBackgroundImage(personal.getBackgroundImage());
 
+		LOGGER.debug("[UserProfileService][insertUpdatePortfolioData] setting AboutDto  from portfolioDataDto ");
 		AboutDto about = dataDto.getAbout();
 		profile.setAboutDescription(about.getDescription());
 
@@ -98,7 +109,7 @@ public class UserProfileService {
 	}
 
 	private PortfolioDataDto mapToPortfolioDataDto(UserProfile profile) {
-
+		LOGGER.debug("[UserProfileService][mapToPortfolioDataDto] inside portfolio data ");
 		PersonalDto personal = PersonalDto.builder().name(profile.getName()).title(profile.getTitle())
 				.bio(profile.getBio()).email(profile.getEmail()).phone(profile.getPhone()).country(profile.getCountry())
 				.state(profile.getState()).github(profile.getGithub()).linkedin(profile.getLinkedin())

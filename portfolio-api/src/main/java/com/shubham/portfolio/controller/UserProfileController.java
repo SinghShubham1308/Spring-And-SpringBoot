@@ -1,5 +1,7 @@
 package com.shubham.portfolio.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,6 +18,8 @@ import com.shubham.portfolio.service.UserProfileService;
 @RestController
 @RequestMapping("/api/v1/profile-data")
 public class UserProfileController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserProfileController.class);
 	private final UserProfileService service;
 
 	public UserProfileController(UserProfileService service) {
@@ -26,6 +30,7 @@ public class UserProfileController {
 	@GetMapping
 	public ResponseEntity<PortfolioDataDto> getPortfolioData() {
 		PortfolioDataDto data = service.getPortfolioData();
+		LOGGER.info("Fetching portfolio data for user: {}");
 		return ResponseEntity.ok(data);
 	}
 

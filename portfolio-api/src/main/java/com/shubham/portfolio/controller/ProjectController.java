@@ -38,6 +38,7 @@ public class ProjectController {
 
 	@GetMapping("/projects")
 	public List<Project> getProjects() {
+		LOGGER.info("[ProjectController][getProjects] Request received to fetch all projects");
 		List<Project> allProjects = new ArrayList<>();
 		List<Project> projects = service.getAllProjects();
 		for (Project project : projects) {

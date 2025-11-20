@@ -21,7 +21,6 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtService {
 	@Value("${jwt.secret.key}")
-//	@Value("${application.security.jwt.secret-key}")
 	private String secretKey;
 
 	@Value("${application.security.jwt.expiration}")
@@ -34,13 +33,11 @@ public class JwtService {
 		return extractClaim(token, Claims::getSubject);
 	}
 
-	// Token se koi bhi claim (data) nikalna
 	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
 		final Claims claims = extractAllClaims(token);
 		return claimsResolver.apply(claims);
 	}
 
-	// Naya token generate karna
 	public String generateToken(UserDetails userDetails) {
 		return generateToken(new HashMap<>(), userDetails);
 	}
