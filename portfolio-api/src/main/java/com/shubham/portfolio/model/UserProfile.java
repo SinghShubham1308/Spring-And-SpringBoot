@@ -17,6 +17,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -71,6 +72,7 @@ public class UserProfile {
 	@OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL, orphanRemoval = true)
 //	@Builder.Default
 	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	private Set<Skill> skills = new HashSet<>();
 
 	/*
