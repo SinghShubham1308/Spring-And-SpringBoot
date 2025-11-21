@@ -63,24 +63,18 @@ public class UserProfile {
 	private User user;
 
 	@OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Builder.Default
+//	@Builder.Default
 	private Set<AboutFeature> features = new HashSet<>();
 
 	@OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-	@Builder.Default
+//	@Builder.Default
 	private Set<Skill> skills = new HashSet<>();
-	
-	public Set<AboutFeature> getFeatures() {
-        if (this.features == null) {
-            this.features = new HashSet<>();
-        }
-        return this.features;
-    }
 
-    public Set<Skill> getSkills() {
-        if (this.skills == null) {
-            this.skills = new HashSet<>();
-        }
-        return this.skills;
-    }
+	/*
+	 * public Set<AboutFeature> getFeatures() { if (this.features == null) {
+	 * this.features = new HashSet<>(); } return this.features; }
+	 * 
+	 * public Set<Skill> getSkills() { if (this.skills == null) { this.skills = new
+	 * HashSet<>(); } return this.skills; }
+	 */
 }
