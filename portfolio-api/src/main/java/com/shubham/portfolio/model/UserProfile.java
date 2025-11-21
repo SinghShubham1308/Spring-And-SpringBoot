@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * @author SinghShubham
@@ -64,10 +65,12 @@ public class UserProfile {
 
 	@OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL, orphanRemoval = true)
 //	@Builder.Default
+	@ToString.Exclude
 	private Set<AboutFeature> features = new HashSet<>();
 
 	@OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL, orphanRemoval = true)
 //	@Builder.Default
+	@ToString.Exclude
 	private Set<Skill> skills = new HashSet<>();
 
 	/*
