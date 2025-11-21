@@ -68,8 +68,8 @@ public class UserProfileService {
 		profile.setFeatures(Optional.ofNullable(profile.getFeatures()).orElseGet(HashSet::new));
 		profile.setSkills(Optional.ofNullable(profile.getSkills()).orElseGet(HashSet::new));
 
-		profile.getFeatures().clear();
-		profile.getSkills().clear();
+//		profile.getFeatures().clear();
+//		profile.getSkills().clear();
 		LOGGER.debug("[UserProfileService][insertUpdatePortfolioData] setting PersonalDto from portfolioDataDto ");
 		PersonalDto personal = dataDto.getPersonal();
 		profile.setName(personal.getName());
