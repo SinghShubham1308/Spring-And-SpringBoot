@@ -3,10 +3,10 @@ package com.shubham.portfolio.service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -65,17 +65,8 @@ public class UserProfileService {
 		LOGGER.debug("[UserProfileService][insertUpdatePortfolioData]  user profile is {}", profile);
 		profile.setUser(adminUser);
 
-
-		Hibernate.initialize(profile.getFeatures());
-		Hibernate.initialize(profile.getSkills());
-
-		// Ab safe null check
-		if (profile.getFeatures() == null) {
-		    profile.setFeatures(new HashSet<>());
-		}
-		if (profile.getSkills() == null) {
-		    profile.setSkills(new HashSet<>());
-		}
+		profile.setFeatures(Optional.ofNullable(profile.getFeatures()).orElseGet(HashSet::new));
+		profile.setSkills(Optional.ofNullable(profile.getSkills()).orElseGet(HashSet::new));
 
 		profile.getFeatures().clear();
 		profile.getSkills().clear();
