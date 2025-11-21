@@ -3,6 +3,7 @@ package com.shubham.portfolio.service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -63,17 +64,13 @@ public class UserProfileService {
 				.orElse(new UserProfile());
 		LOGGER.debug("[UserProfileService][insertUpdatePortfolioData]  user profile is {}", profile);
 		profile.setUser(adminUser);
-		if (profile.getFeatures() == null) {
-			profile.setFeatures(new HashSet<>());
-		} else {
-			profile.getFeatures().clear();
-		}
 
-		if (profile.getSkills() == null) {
-			profile.setSkills(new HashSet<>());
-		} else {
-			profile.getSkills().clear();
-		}
+		profile.setFeatures(Optional.ofNullable(profile.getFeatures()).orElseGet(HashSet::new));
+		profile.setSkills(Optional.ofNullable(profile.getSkills()).orElseGet(HashSet::new));
+
+		profile.getFeatures().clear();
+		profile.getSkills().clear();
+		profile.getSkills().clear();
 		LOGGER.debug("[UserProfileService][insertUpdatePortfolioData] setting PersonalDto from portfolioDataDto ");
 		PersonalDto personal = dataDto.getPersonal();
 		profile.setName(personal.getName());
