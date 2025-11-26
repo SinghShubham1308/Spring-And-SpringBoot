@@ -44,7 +44,7 @@ public class SecurityConfig {
 						.permitAll().requestMatchers(HttpMethod.PUT, "/api/v1/profile-data").authenticated()
 						.requestMatchers(HttpMethod.POST, "/api/v1/projects").authenticated()
 						.requestMatchers(HttpMethod.DELETE, "/api/v1/projects/**").authenticated()
-
+						.requestMatchers("/actuator/health", "/ping", "/", "/public/**").permitAll()
 						.anyRequest().authenticated())
 
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

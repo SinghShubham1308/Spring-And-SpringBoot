@@ -88,5 +88,10 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+	
+	@GetMapping("/ping")
+    public String ping() {
+        return "pong";
+    }
 
 }
