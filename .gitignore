@@ -1,3 +1,41 @@
-/.metadata/
-# SonarLint cache and lock files
-.sonarlint/
+# --- standard Java/Spring ignores ---
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Maven Build Directory (Important)
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+
+# Gradle Build Directory (If you use Gradle)
+build/
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# IDE specific files (Do not push these)
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# VS Code
+.vscode/
+
+# OS System Files (Mac/Windows junk)
+.DS_Store
+Thumbs.db
