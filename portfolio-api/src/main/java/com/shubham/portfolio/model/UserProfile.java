@@ -65,12 +65,12 @@ public class UserProfile {
 	private User user;
 
 	@OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-//	@Builder.Default
+	@Builder.Default
 	@ToString.Exclude
 	private Set<AboutFeature> features = new HashSet<>();
 
 	@OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-//	@Builder.Default
+	@Builder.Default
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Skill> skills = new HashSet<>();
