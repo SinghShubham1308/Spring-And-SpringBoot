@@ -28,7 +28,7 @@ public class SecurityConfig {
 	}
 
 	private static final String[] SWAGGER_WHITELIST = { "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs",
-			"/v3/api-docs/**" };
+			"/v3/api-docs/**", "/swagger-resources/**", "/webjars/**" };
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -39,18 +39,20 @@ public class SecurityConfig {
 						.requestMatchers(HttpMethod.GET, "/api/v1/projects").permitAll()
 						.requestMatchers(HttpMethod.GET, "/api/v1/projects/**").permitAll()
 						.requestMatchers(HttpMethod.POST, "/api/v1/contact").permitAll()
-						.requestMatchers(SWAGGER_WHITELIST).permitAll().requestMatchers("/api/v1/auth/**").permitAll()
+						.requestMatchers(SWAGGER_WHITELIST).permitAll()
+						.requestMatchers("/api/v1/auth/**").permitAll()
 						.requestMatchers(HttpMethod.GET, "/api/v1/profile-data").permitAll().requestMatchers("/error")
 						.permitAll().requestMatchers(HttpMethod.PUT, "/api/v1/profile-data").authenticated()
 						.requestMatchers(HttpMethod.POST, "/api/v1/projects").authenticated()
 						.requestMatchers(HttpMethod.DELETE, "/api/v1/projects/**").authenticated()
-						.requestMatchers(HttpMethod.GET,"/actuator/health", "/ping", "/", "/public/**").permitAll()
-						.anyRequest().authenticated())
+						.requestMatchers(HttpMethod.GET, "/actuator/health", "/api/v1/ping", "/", "/public/**",
+								"/favicon.ico")
+						.permitAll().anyRequest().authenticated())
 
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider)
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
-	
+
 }

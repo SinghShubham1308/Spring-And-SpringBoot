@@ -39,8 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	}
 
 	private static final List<String> PUBLIC_PATHS = Arrays.asList("/api/v1/auth/**", "/api/v1/projects",
-			"/api/v1/projects/**", "/api/v1/profile-data", "/api/v1/contact", "/ping", "/actuator/**", "/error",
-			"/swagger-ui/**", "/v3/api-docs/**");
+			"/api/v1/projects/**", "/api/v1/profile-data", "/api/v1/contact", "/ping", "/actuator/**", "/error");
 
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
