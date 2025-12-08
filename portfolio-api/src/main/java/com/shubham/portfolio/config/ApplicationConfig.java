@@ -54,22 +54,16 @@ class ApplicationConfig {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:3000",
-				"https://portfolio-shubham-singhs-projects-aab54be0.vercel.app", // Explicitly add your Vercel URL
-				"https://portfolio-shubham-singh.vercel.app" // Add other potential aliases if any
-		));
+
+		configuration.setAllowedOriginPatterns(List.of("http://localhost:*", "https://*.vercel.app"));
+
 		configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-
-		configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin",
-				"Access-Control-Request-Method", "Access-Control-Request-Headers"));
-
-		configuration.setExposedHeaders(List.of("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
-
+		configuration.setAllowedHeaders(List.of("*"));
+		configuration.setExposedHeaders(List.of("Authorization"));
 		configuration.setAllowCredentials(true);
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
-
 		return source;
 	}
 }
