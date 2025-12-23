@@ -61,14 +61,14 @@ public class InventoryService {
 	@Transactional
     public void seedData() {
         if (productRepository.count() == 0) {
-            Product p1 = Product.builder().id("PROD-001").name("Gaming Laptop").sku("GL-999").price(new BigDecimal("1200.00")).build();
-            Product p2 = Product.builder().id("PROD-002").name("Wireless Mouse").sku("WM-001").price(new BigDecimal("50.00")).build();
+            Product p1 = Product.builder().id("PROD-003").name("wireless charger").sku("WC-89").price(new BigDecimal("1200.00")).build();
+            Product p2 = Product.builder().id("PROD-004").name("Iphone").sku("IP-001").price(new BigDecimal("100000.00")).build();
             
             productRepository.save(p1);
             productRepository.save(p2);
 
-            Stock s1 = Stock.builder().productId("PROD-001").availableQty(10).reservedQty(0).build();
-            Stock s2 = Stock.builder().productId("PROD-002").availableQty(100).reservedQty(0).build();
+            Stock s1 = Stock.builder().productId("PROD-003").availableQty(10).reservedQty(0).build();
+            Stock s2 = Stock.builder().productId("PROD-004").availableQty(100).reservedQty(0).build();
             
             stockRepository.save(s1);
             stockRepository.save(s2);

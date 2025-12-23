@@ -13,7 +13,7 @@ import com.flowstream.orders.dto.InventoryReservationRequest;
 /**
  * @author SinghShubham1308
  */
-@FeignClient(name = "inventory-service", url = "http://localhost:9091") 
+@FeignClient(name = "inventory-service") 
 public interface InventoryClient {
 	@GetMapping("/api/v1/inventory/{productId}/price")
     BigDecimal getPrice(@PathVariable String productId);

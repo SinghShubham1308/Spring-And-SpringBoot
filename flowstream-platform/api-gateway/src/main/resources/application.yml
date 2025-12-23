@@ -1,0 +1,31 @@
+server:
+  port: 9191
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true # Eureka se automatically routes utha lega
+      routes:
+        # Route 1: Order Service
+        - id: order-service
+          uri: lb://ORDER-SERVICE  # 'lb' matlab Load Balanced. Ye Eureka ID hai.
+          predicates:
+            - Path=/api/v1/orders/** # Agar URL yahan match hua, toh order-service ko bhej do
+
+        # Route 2: Inventory Service
+        - id: inventory-service
+          uri: lb://INVENTORY-SERVICE
+          predicates:
+            - Path=/api/v1/inventory/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+logging:
+  level:
+    '[org.springframework.cloud.gateway]': trace
