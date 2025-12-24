@@ -16,7 +16,7 @@ import com.flowstream.orders.service.OrderService;
  * @author SinghShubham1308
  */
 @RestController
-@RequestMapping("api/v1/order")
+@RequestMapping("/api/v1/order")
 public class OrderController {
 
 	private OrderService service;
@@ -30,6 +30,5 @@ public class OrderController {
 		UUID order = service.createOrder(request);
 		return new ResponseEntity<>(order,HttpStatus.CREATED);
 	}
-	
-	
+		
 }

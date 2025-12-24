@@ -60,7 +60,7 @@ public class InventoryService {
 	
 	@Transactional
     public void seedData() {
-        if (productRepository.count() == 0) {
+//        if (productRepository.count() == 0) {
             Product p1 = Product.builder().id("PROD-003").name("wireless charger").sku("WC-89").price(new BigDecimal("1200.00")).build();
             Product p2 = Product.builder().id("PROD-004").name("Iphone").sku("IP-001").price(new BigDecimal("100000.00")).build();
             
@@ -73,7 +73,7 @@ public class InventoryService {
             stockRepository.save(s1);
             stockRepository.save(s2);
             log.info("Seeded dummy data for Inventory");
-        }
+//        }
     }
 
 }
