@@ -30,4 +30,4 @@ jobs:
 			PROTOCOL: ${{ secrets.PROTOCOL }}
 			SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
 			USERNAME: ${{ secrets.USERNAME }}
-      run: mvn -B package -DskipTests --file pom.xml
+      run: mvn -B package -DskipTests --file EmailFollowUp/pom.xml
