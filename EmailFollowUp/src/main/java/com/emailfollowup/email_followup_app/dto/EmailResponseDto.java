@@ -2,22 +2,11 @@ package com.emailfollowup.email_followup_app.dto;
 
 import java.time.LocalDateTime;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.emailfollowup.email_followup_app.entitty.EmailStatus;
 
 /**
  * @author SinghShubham1308
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class EmailResponseDto {
-
-	private Long id;
-	private String recipient;
-	private String subject;
-	private String body;
-	private String status;
-	private LocalDateTime createdAt;
+public record EmailResponseDto(Long id, String recipient, String subject, String body, EmailStatus status,
+		LocalDateTime createdAt) {
 }
