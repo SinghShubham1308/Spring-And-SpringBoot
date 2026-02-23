@@ -9,6 +9,7 @@ import java.util.Properties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.emailfollowup.email_followup_app.entitty.EmailStatus;
 import com.emailfollowup.email_followup_app.entitty.EmailTask;
 import com.emailfollowup.email_followup_app.repository.EmailTaskRepository;
 
@@ -99,7 +100,7 @@ public class EmailFetchService {
 						// rahe hain
 						task.setBody(body.length() > 250 ? body.substring(0, 250) + "..." : body);
 						task.setCreatedAt(sentDate);
-						task.setStatus("SENT"); // Status SENT set kar diya
+						task.setStatus(EmailStatus.SENT); // Status SENT set kar diya
 
 						emailTaskRepository.save(task);
 						log.info("Saved: " + subject);
@@ -179,8 +180,8 @@ public class EmailFetchService {
 							boolean subjectMatch = incomingCleanSubject.contains(taskCleanSubject) || 
                                     taskCleanSubject.contains(incomingCleanSubject);
                
-							if (subjectMatch && recipientMatch && !task.getStatus().equals("REPLIED")) {
-								task.setStatus("REPLIED");
+							if (subjectMatch && recipientMatch && !task.getStatus().equals(EmailStatus.REPLIED)) {
+								task.setStatus(EmailStatus.REPLIED);
 								emailTaskRepository.save(task);
 								log.info("MATCH FOUND! Task ID " + task.getId() + " marked as REPLIED.");
 							}

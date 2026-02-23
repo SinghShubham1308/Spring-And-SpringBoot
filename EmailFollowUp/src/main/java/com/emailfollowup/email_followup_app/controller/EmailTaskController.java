@@ -2,7 +2,9 @@ package com.emailfollowup.email_followup_app.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,8 @@ import com.emailfollowup.email_followup_app.dto.EmailResponseDto;
 import com.emailfollowup.email_followup_app.entitty.EmailTask;
 import com.emailfollowup.email_followup_app.service.EmailFetchService;
 import com.emailfollowup.email_followup_app.service.EmailTaskService;
+
+import jakarta.validation.Valid;
 
 /**
  * @author SinghShubham1308
@@ -30,9 +34,14 @@ public class EmailTaskController {
 	}
 
 	@PostMapping("/schedule")
-	public EmailResponseDto scheduleEmail(@RequestBody EmailRequestDto emailTask) {
+	public EmailResponseDto scheduleEmail(@Valid @RequestBody EmailRequestDto emailTask) {
 		return emailTaskService.scheduleEmail(emailTask);
 	}
+	
+	@GetMapping("/{id}")
+    public ResponseEntity<EmailResponseDto> getEmailById(@PathVariable Long id) {
+        return ResponseEntity.ok(emailTaskService.getTaskById(id));
+    }
 
 	@GetMapping
 	public List<EmailTask> getAllEmails() {
